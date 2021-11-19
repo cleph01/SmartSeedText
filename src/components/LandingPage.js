@@ -29,7 +29,14 @@ function LandingPage() {
         setMessage({ ...message, submitting: true });
 
         axios
-            .post("/api/messages", { message: message.message })
+            .post(
+                "https://sms-contact-form-api.herokuapp.com/api/messages",
+                // "http://localhost:5000/api/messages",
+                {
+                    message: message.message,
+                },
+                { headers: { "Access-Control-Allow-Origin": "*" } }
+            )
             .then((response) => {
                 if (response.success) {
                     setMessage({
@@ -47,6 +54,12 @@ function LandingPage() {
                     setMessage({
                         error: true,
                         submitting: false,
+                        message: {
+                            customerCell: "",
+                            customerName: "",
+                            rooferCell: "",
+                            body: "",
+                        },
                     });
                 }
             })
