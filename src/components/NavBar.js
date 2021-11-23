@@ -1,15 +1,25 @@
 import "../lib/css/nav-bar.scss";
 
-function NavBar({ authUser }) {
+function NavBar({ businessInfo }) {
     return (
-        <div className="navbar-container">
+        <div
+            className="navbar-container"
+            style={{ backgroundColor: businessInfo.navBarColor }}
+        >
             <div className="logo-wrapper">
-                {/* <img className="logo" src={logo} alt="logo" /> */}
-                Logo
+                <img className="logo" src={businessInfo.logoUrl} alt="logo" />
             </div>
             <div className="navbar__body">
                 <div className="nav__btn">
-                    <a href="https://valleyroofingandsidinginc">Back</a>
+                    <a
+                        href={businessInfo.website}
+                        style={{
+                            color: businessInfo.backBtnColor,
+                            fontWeight: "700",
+                        }}
+                    >
+                        Go Back
+                    </a>
                 </div>
             </div>
         </div>

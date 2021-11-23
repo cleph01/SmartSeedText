@@ -1,9 +1,8 @@
-.landing-container {
+.text-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+
     align-items: center;
-    margin: 95px 0px;
 
     .chat-container {
         display: flex;
@@ -13,7 +12,9 @@
         width: 70%;
         border-radius: 5px;
         background-color: #fff;
+        margin: 95px;
         padding: 20px;
+        opacity: 85%;
 
         header {
             display: flex;
@@ -21,18 +22,6 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-
-            .signout-btn {
-                text-align: center;
-                width: 25%;
-                background-color: #bcc0bc;
-                color: #c90404;
-                border: none;
-                border-radius: 5px;
-                padding: 10px;
-                margin-top: 10px;
-                cursor: pointer;
-            }
 
             .input-wrapper {
                 width: 100%;

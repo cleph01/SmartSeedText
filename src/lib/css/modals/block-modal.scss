@@ -1,0 +1,45 @@
+.btn-wrapper {
+    display: "flex";
+    flex-direction: row;
+    justify-content: "space-around";
+    align-items: "center";
+    margin-top: "15px";
+
+    .block-btn {
+        display: block;
+        position: relative;
+        width: 115px;
+        height: auto;
+        padding: 5px;
+        border-radius: 25px;
+        background: #1c76d2;
+        box-shadow: 0 4px 7px rgba(0, 0, 0, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #f9f9f9;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.2s ease-out;
+        margin-top: 15px;
+    }
+
+    .cancel-btn {
+        display: block;
+        position: relative;
+        width: 115px;
+        height: auto;
+        padding: 5px;
+        border-radius: 25px;
+        background: #1c76d2;
+        box-shadow: 0 4px 7px rgba(0, 0, 0, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #f9f9f9;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.2s ease-out;
+        margin-top: 15px;
+    }
+}

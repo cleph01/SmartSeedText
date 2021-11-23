@@ -1,13 +1,13 @@
 import firebase from "firebase";
 
 const config = {
-    apiKey: "AIzaSyATeDJsgQkdBHgJ_uf_Fbh5Tvn6lxg4RsU",
-    authDomain: "tap2txt-com.firebaseapp.com",
-    projectId: "tap2txt-com",
-    storageBucket: "tap2txt-com.appspot.com",
-    messagingSenderId: "329426294131",
-    appId: "1:329426294131:web:b12b1df886ccdd03d06106",
-    measurementId: "G-T6J191ZSK5",
+    apiKey: "AIzaSyByuj_J9SPS8H0tg4Zjib3655i0ZUS8Hn8",
+    authDomain: "smartseedtext.firebaseapp.com",
+    projectId: "smartseedtext",
+    storageBucket: "smartseedtext.appspot.com",
+    messagingSenderId: "643456542646",
+    appId: "1:643456542646:web:aea7430247f86c3ae9c317",
+    measurementId: "G-CJF5VJTVVD",
 };
 
 const initFirebase = () => {
