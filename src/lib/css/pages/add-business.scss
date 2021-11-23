@@ -36,4 +36,10 @@
         padding: 10px;
         margin-top: 20px;
     }
+
+    .disable {
+        pointer-events: none;
+        background-color: #999999;
+        opacity: 0.5;
+    }
 }

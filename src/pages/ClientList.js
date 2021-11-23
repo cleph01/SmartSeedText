@@ -83,7 +83,7 @@ function ClientList() {
     return (
         <div className="client-list-container">
             <div className="inner-wrapper">
-                <h2>Clients</h2>
+                <h2>Paying Clients</h2>
 
                 <List
                     sx={{
@@ -177,6 +177,7 @@ function ClientList() {
                 openEditModal={openEditModal}
                 setOpenEditModal={setOpenEditModal}
                 targetBusiness={targetBusiness}
+                setBusinesses={setBusinesses}
                 setOpenSnackBar={setOpenSnackBar}
                 setAlertMsg={setAlertMsg}
             />
@@ -217,4 +218,4 @@ function ClientList() {
     );
 }
 
-export default React.memo(ClientList);
+export default ClientList;

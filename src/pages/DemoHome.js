@@ -1,11 +1,11 @@
-import { useState, useEffect, useContext } from "react";
-import { Route, Switch } from "react-router-dom";
+import { useEffect, useContext } from "react";
+import { Route } from "react-router-dom";
 
 import DemoNavBar from "../components/DemoNavBar";
 
-import AddBusiness from "../pages/AddBusiness";
-import Text from "../pages/Text";
-import ClientList from "../pages/ClientList";
+import AddBusiness from "./AddBusiness";
+import Text from "./DemoText";
+import ClientList from "./ClientList";
 
 import { UserContext } from "../contexts/UserContext";
 
@@ -15,8 +15,6 @@ import "../lib/css/pages/demo-home.scss";
 
 function Demo({ authUser }) {
     const { userState, userDispatch } = useContext(UserContext);
-
-    const [user, setUser] = useState();
 
     useEffect(() => {
         // Try and Refactor with Async/Await
@@ -40,8 +38,6 @@ function Demo({ authUser }) {
                                 displayName: user.data().displayName,
                             },
                         });
-
-                        setUser({ userId: user.id, role: user.data().role });
                     } else {
                         // If doesn't Exist, Create New User and set State with Reducer
 
@@ -64,8 +60,6 @@ function Demo({ authUser }) {
                                     payload: newUserData,
                                 });
 
-                                setUser(newUserData);
-
                                 console.log(
                                     "Created User with Id: ",
                                     authUser.uid
@@ -80,12 +74,8 @@ function Demo({ authUser }) {
                     console.log("Error Checking User Exists: ", error);
                 });
         }
-        return () => {
-            setUser(null);
-        };
     }, []);
 
-    console.log("User State: ", userState);
     return (
         <div
             className="landing-container"
@@ -94,11 +84,11 @@ function Demo({ authUser }) {
             <DemoNavBar user={userState} />
 
             <Route path="/demo/text">
-                <Text user={userState} />
+                <Text />
             </Route>
 
             <Route path="/demo/business/add/:userId">
-                <AddBusiness user={userState} />
+                <AddBusiness />
             </Route>
 
             <Route path="/demo/clients/all/:userId">

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -33,7 +33,7 @@ function EditModal({
 }) {
     console.log("Target Business: ", targetBusiness);
 
-    const [newClientInfo, setNewClientInfo] = useState({});
+    const [newClientInfo, setNewClientInfo] = useState();
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -53,8 +53,11 @@ function EditModal({
                 setBusinesses((prevState) => {
                     return prevState.map((business) => {
                         var temp = Object.assign({}, business);
+
                         if (business.businessId === targetBusiness.businessId) {
-                            temp = { ...temp, newClientInfo };
+                            console.log("Pre Temp: ", temp);
+                            temp = { ...temp, ...newClientInfo };
+                            console.log("Post Temp: ", temp);
                         }
 
                         return temp;
@@ -82,6 +85,22 @@ function EditModal({
         setOpenEditModal(false);
     };
 
+    useEffect(() => {
+        if (targetBusiness) {
+            setNewClientInfo({
+                businessName: targetBusiness.businessName,
+                businessCell: targetBusiness.businessCell,
+                website: targetBusiness.website,
+                logoUrl: targetBusiness.logoUrl,
+                backBtnColor: targetBusiness.backBtnColor,
+                navBarColor: targetBusiness.navBarColor,
+            });
+        }
+        return () => {
+            setNewClientInfo(null);
+        };
+    }, [targetBusiness]);
+
     console.log("New Client INfo: ", newClientInfo);
 
     return (
@@ -103,12 +122,8 @@ function EditModal({
                         type="text"
                         name="businessName"
                         placeholder="Enter New Business Name"
-                        value={
-                            newClientInfo.businessName ||
-                            targetBusiness?.businessName
-                        }
+                        value={newClientInfo?.businessName}
                         onChange={handleChange}
-                        
                     />
                 </div>
                 <div className="input-wrapper">
@@ -118,10 +133,7 @@ function EditModal({
                         type="tel"
                         name="businessCell"
                         placeholder="Receiver of Text Message"
-                        value={
-                            newClientInfo.businessCell ||
-                            targetBusiness?.businessCell
-                        }
+                        value={newClientInfo?.businessCell}
                         inputProps={{ maxLength: 10 }}
                         onChange={handleChange}
                     />
@@ -133,7 +145,7 @@ function EditModal({
                         type="text"
                         name="website"
                         placeholder="Enter Client Website Address"
-                        value={newClientInfo.website || targetBusiness?.website}
+                        value={newClientInfo?.website}
                         onChange={handleChange}
                     />
                 </div>
@@ -144,7 +156,7 @@ function EditModal({
                         type="text"
                         name="logoUrl"
                         placeholder="Enter Logo URL"
-                        value={newClientInfo.logoUrl || targetBusiness?.logoUrl}
+                        value={newClientInfo?.logoUrl}
                         onChange={handleChange}
                     />
                 </div>
@@ -155,10 +167,7 @@ function EditModal({
                         type="text"
                         name="backBtnColor"
                         placeholder="Enter Customer Name"
-                        value={
-                            newClientInfo.backBtnColor ||
-                            targetBusiness?.backBtnColor
-                        }
+                        value={newClientInfo?.backBtnColor}
                         onChange={handleChange}
                     />
                 </div>
@@ -169,10 +178,7 @@ function EditModal({
                         type="text"
                         name="navBarColor"
                         placeholder="Enter Nav Bar Color Hex Code"
-                        value={
-                            newClientInfo.navBarColor ||
-                            targetBusiness?.navBarColor
-                        }
+                        value={newClientInfo?.navBarColor}
                         onChange={handleChange}
                     />
                 </div>

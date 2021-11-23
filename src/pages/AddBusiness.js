@@ -33,6 +33,7 @@ function AddBusiness() {
         website: "",
     });
 
+    const [disableSubmit, setDisableSubmit] = useState(false);
     const [textPageUrl, setTextPageUrl] = useState();
     const [openSnackBar, setOpenSnackBar] = useState(false);
     const [alertMsg, setAlertMsg] = useState({
@@ -65,6 +66,7 @@ function AddBusiness() {
             newClientInfo.navBarColor &&
             newClientInfo.website
         ) {
+            setDisableSubmit(true);
             // Create New Business Entry in DB
             db.collection("businesses")
                 .add({
@@ -201,7 +203,10 @@ function AddBusiness() {
                 />
             </div>
 
-            <div className="submit-btn" onClick={handleSubmit}>
+            <div
+                className={`submit-btn ${disableSubmit ? " disable" : ""}`}
+                onClick={handleSubmit}
+            >
                 Submit
             </div>
 

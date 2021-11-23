@@ -66,8 +66,11 @@ function App() {
                             <Route
                                 exact
                                 path={ROUTES.MAIN}
-                                component={COMPONENTS.LandingPage}
+                                component={COMPONENTS.LiveTextPage}
                             />
+                            <Route>
+                                <COMPONENTS.NotFound />
+                            </Route>
                         </Switch>
                     </Suspense>
                 </Router>
