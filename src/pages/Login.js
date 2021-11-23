@@ -1,8 +1,8 @@
 import { useState, forwardRef } from "react";
 
-import Auth from "./Auth";
+import Auth from "../components/Auth";
 
-import "../lib/css/login.scss";
+import "../lib/css/pages/login.scss";
 
 import logo from "../assets/logos/logo-text.png";
 

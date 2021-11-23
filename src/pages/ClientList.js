@@ -2,10 +2,10 @@ import React, { useState, useEffect, forwardRef } from "react";
 import { useParams } from "react-router-dom";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-import EditModal from "./modals/EditModal";
-import BlockModal from "./modals/BlockModal";
-import DeleteModal from "./modals/DeleteModal";
-import ToolTip from "./ToolTip";
+import EditModal from "../components/modals/EditModal";
+import BlockModal from "../components/modals/BlockModal";
+import DeleteModal from "../components/modals/DeleteModal";
+import ToolTip from "../components/ToolTip";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -28,7 +28,7 @@ import MuiAlert from "@mui/material/Alert";
 
 import { db } from "../services/firebase/firebase-config";
 
-import "../lib/css/client-list.scss";
+import "../lib/css/pages/client-list.scss";
 
 function ClientList() {
     const { userId } = useParams();
@@ -136,9 +136,7 @@ function ClientList() {
                                     </IconButton>
                                     <IconButton
                                         onClick={() => {
-                                            setTargetBusiness(
-                                                business.businessId
-                                            );
+                                            setTargetBusiness({ ...business });
                                             setOpenEditModal(true);
                                         }}
                                     >

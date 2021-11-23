@@ -2,7 +2,7 @@ import { useReducer, Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { UserContext } from "./contexts/UserContext";
-import UserReducer from "./reducers/user-reducer/userReducer.js";
+import UserReducer from "./store/reducers/user-reducer/userReducer.js";
 
 import useAuthListener from "./hooks/use-auth-listener";
 import Skeleton from "@mui/material/Skeleton";
@@ -51,16 +51,16 @@ function App() {
                             <IsUserLoggedIn
                                 authUser={authUser}
                                 path={ROUTES.LOGIN}
-                                loggedInPath={ROUTES.DEMO}
+                                loggedInPath={ROUTES.DEMO_HOME}
                             >
                                 <COMPONENTS.Login />
                             </IsUserLoggedIn>
 
                             <PrivateRoute
-                                path={ROUTES.DEMO}
+                                path={ROUTES.DEMO_HOME}
                                 authUser={authUser}
                             >
-                                <COMPONENTS.Demo />
+                                <COMPONENTS.DemoHome />
                             </PrivateRoute>
 
                             <Route

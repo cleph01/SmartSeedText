@@ -1,4 +1,4 @@
-import "../lib/css/nav-bar.scss";
+import "../lib/css/components/nav-bar.scss";
 
 function NavBar({ businessInfo }) {
     return (

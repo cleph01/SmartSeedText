@@ -2,9 +2,9 @@ import { useState, forwardRef } from "react";
 
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-import { useParams } from "react-router-dom";
+import { useParams, useRouteMatch } from "react-router-dom";
 
-import ToolTip from "./ToolTip";
+import ToolTip from "../components/ToolTip";
 
 import Box from "@mui/material/Box";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
@@ -17,10 +17,12 @@ import MuiAlert from "@mui/material/Alert";
 
 import { db } from "../services/firebase/firebase-config";
 
-import "../lib/css/add-business.scss";
+import "../lib/css/pages/add-business.scss";
 
 function AddBusiness() {
     const { userId } = useParams();
+
+    const { path, url } = useRouteMatch();
 
     const [newClientInfo, setNewClientInfo] = useState({
         backBtnColor: "",
@@ -199,10 +201,8 @@ function AddBusiness() {
                 />
             </div>
 
-            <div className="btn-wrapper">
-                <div className="submit-btn" onClick={handleSubmit}>
-                    Submit
-                </div>
+            <div className="submit-btn" onClick={handleSubmit}>
+                Submit
             </div>
 
             {textPageUrl && (

@@ -1,10 +1,12 @@
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
+import Divider from "@mui/material/Divider";
 
 import "../../lib/css/modals/edit-modal.scss";
+
+import { db } from "../../services/firebase/firebase-config";
 
 const style = {
     display: "flex",
@@ -21,15 +23,17 @@ const style = {
     p: 4,
 };
 
-function EditModal({ openEditModal, setOpenEditModal }) {
-    const [newClientInfo, setNewClientInfo] = useState({
-        backBtnColor: "",
-        businessCell: "",
-        businessName: "",
-        logoUrl: "",
-        navBarColor: "",
-        website: "",
-    });
+function EditModal({
+    openEditModal,
+    setOpenEditModal,
+    targetBusiness,
+    setOpenSnackBar,
+    setAlertMsg,
+    setBusinesses,
+}) {
+    console.log("Target Business: ", targetBusiness);
+
+    const [newClientInfo, setNewClientInfo] = useState({});
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -42,8 +46,43 @@ function EditModal({ openEditModal, setOpenEditModal }) {
     const handleCloseEditModal = () => setOpenEditModal(false);
 
     const handleSubmit = () => {
-        return;
+        db.collection("businesses")
+            .doc(targetBusiness.businessId)
+            .update(newClientInfo)
+            .then(() => {
+                setBusinesses((prevState) => {
+                    return prevState.map((business) => {
+                        var temp = Object.assign({}, business);
+                        if (business.businessId === targetBusiness.businessId) {
+                            temp = { ...temp, newClientInfo };
+                        }
+
+                        return temp;
+                    });
+                });
+
+                setAlertMsg({
+                    message: `Successfully Updated Business Info`,
+                    severity: "success",
+                });
+
+                setOpenSnackBar(true);
+            })
+            .catch((error) => {
+                setAlertMsg({
+                    message: "Error Updating Business Info",
+                    severity: "error",
+                });
+
+                setOpenSnackBar(true);
+
+                console.log("Error updating Text Page Url: ", error);
+            });
+
+        setOpenEditModal(false);
     };
+
+    console.log("New Client INfo: ", newClientInfo);
 
     return (
         <Modal
@@ -54,15 +93,22 @@ function EditModal({ openEditModal, setOpenEditModal }) {
         >
             <Box sx={style}>
                 <div className="input-wrapper">
-                    <h3>Edit Business Details</h3>
+                    <h3 style={{ marginBottom: "35px" }}>
+                        Edit Business Details
+                    </h3>
+
                     <TextField
                         className="input"
                         label="Business Name"
                         type="text"
                         name="businessName"
                         placeholder="Enter New Business Name"
-                        value={newClientInfo.businessName}
+                        value={
+                            newClientInfo.businessName ||
+                            targetBusiness?.businessName
+                        }
                         onChange={handleChange}
+                        
                     />
                 </div>
                 <div className="input-wrapper">
@@ -72,7 +118,10 @@ function EditModal({ openEditModal, setOpenEditModal }) {
                         type="tel"
                         name="businessCell"
                         placeholder="Receiver of Text Message"
-                        value={newClientInfo.businessCell}
+                        value={
+                            newClientInfo.businessCell ||
+                            targetBusiness?.businessCell
+                        }
                         inputProps={{ maxLength: 10 }}
                         onChange={handleChange}
                     />
@@ -84,7 +133,7 @@ function EditModal({ openEditModal, setOpenEditModal }) {
                         type="text"
                         name="website"
                         placeholder="Enter Client Website Address"
-                        value={newClientInfo.website}
+                        value={newClientInfo.website || targetBusiness?.website}
                         onChange={handleChange}
                     />
                 </div>
@@ -95,7 +144,7 @@ function EditModal({ openEditModal, setOpenEditModal }) {
                         type="text"
                         name="logoUrl"
                         placeholder="Enter Logo URL"
-                        value={newClientInfo.logoUrl}
+                        value={newClientInfo.logoUrl || targetBusiness?.logoUrl}
                         onChange={handleChange}
                     />
                 </div>
@@ -106,7 +155,10 @@ function EditModal({ openEditModal, setOpenEditModal }) {
                         type="text"
                         name="backBtnColor"
                         placeholder="Enter Customer Name"
-                        value={newClientInfo.backBtnColor}
+                        value={
+                            newClientInfo.backBtnColor ||
+                            targetBusiness?.backBtnColor
+                        }
                         onChange={handleChange}
                     />
                 </div>
@@ -117,7 +169,10 @@ function EditModal({ openEditModal, setOpenEditModal }) {
                         type="text"
                         name="navBarColor"
                         placeholder="Enter Nav Bar Color Hex Code"
-                        value={newClientInfo.navBarColor}
+                        value={
+                            newClientInfo.navBarColor ||
+                            targetBusiness?.navBarColor
+                        }
                         onChange={handleChange}
                     />
                 </div>

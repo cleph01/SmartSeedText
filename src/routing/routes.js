@@ -1,9 +1,9 @@
 // Display ADMIN page
-const DEMO = "/demo";
+const DEMO_HOME = "/demo";
 // Display Public Facing Landing SMS Page
 const MAIN = "/:businessId";
 // Login Page
 const LOGIN = "/login";
 // Add Business Page
 
-export { DEMO, MAIN, LOGIN };
+export { DEMO_HOME, MAIN, LOGIN };

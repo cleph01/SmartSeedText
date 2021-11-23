@@ -2,9 +2,8 @@ import { useState } from "react";
 
 import { useHistory } from "react-router-dom";
 
-import "../lib/css/demo-nav-bar.scss";
+import "../lib/css/components/demo-nav-bar.scss";
 
-import Button from "@mui/material/Button";
 import MenuIcon from "@mui/icons-material/Menu";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";

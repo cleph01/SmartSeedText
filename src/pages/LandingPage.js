@@ -1,20 +1,19 @@
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+
+import NavBar from "../components/NavBar";
 
 import { db } from "../services/firebase/firebase-config";
 
+import Skeleton from "@mui/material/Skeleton";
 import TextField from "@mui/material/TextField";
 
-import "../lib/css/text.scss";
+import "../lib/css/pages/landing-page.scss";
 
-const businessInfo = {
-    logoUrl: "/logo.png",
-    website: "https://www.smartseed.agency/",
-    navBarColor: "#ffffff",
-    backBtnColor: "#55c0da",
-};
+function LandingPage() {
+    const { businessId } = useParams();
 
-function Text({ user }) {
-    const chatRef = useRef();
+    const [businessInfo, setBusinessInfo] = useState();
 
     const [message, setMessage] = useState({
         message: {
@@ -43,9 +42,8 @@ function Text({ user }) {
         const twilioPayload = {
             to: message.message.rooferCell,
             body: `New Message from Contact Form: Customer Name: ${message.message.customerName} - ${message.message.body} - Call them @ : ${message.message.customerCell}`,
-            repId: user.userId,
-            displayName: user.displayName,
-            demo: true,
+            businessId: businessId,
+            businessName: businessInfo.businessName,
         };
 
         const chat = document.getElementsByClassName("chat")[0];
@@ -66,9 +64,6 @@ function Text({ user }) {
                 chat.innerHTML +=
                     "<div class='mine messages'><div class='message last'>Your message has successfully been sent!! 🙌  Someone will be in touch with you shortly. 💯</div></div>";
 
-                // Refocus to chat window
-                chatRef.current.focus();
-
                 // Reset Message Fields, Keeping Roofer # intact
                 setMessage((prevState) => ({
                     ...prevState,
@@ -77,7 +72,6 @@ function Text({ user }) {
                         customerCell: "",
                         customerName: "",
                         body: "",
-                        rooferName: "",
                     },
                 }));
             })
@@ -90,27 +84,67 @@ function Text({ user }) {
                     "<div class='mine messages'><div class='message last'>There was an error sending your message !! 😟 Please Call us at " +
                     businessInfo.businessCell +
                     "</div></div>";
-
-                // Refocus to chat window
-                chatRef.current.focus();
             });
     };
 
-    console.log("User State: ", user);
+    useEffect(() => {
+        if (businessId) {
+            db.collection("businesses")
+                .doc(businessId)
+                .get()
+                .then((doc) => {
+                    setBusinessInfo({
+                        businessId: businessId,
+                        ...doc.data(),
+                    });
+
+                    setMessage((prevState) => ({
+                        ...prevState,
+                        message: {
+                            ...prevState.message,
+                            rooferCell: doc.data()
+                                ? doc.data().businessCell
+                                : "",
+                        },
+                    }));
+                })
+                .catch((error) => {
+                    console.log("error geting business info: ", error);
+                });
+        }
+    }, []);
+
+    if (!businessInfo) {
+        return (
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: "10px",
+                }}
+            >
+                <Skeleton variant="rectangular" width={350} height={218} />
+            </div>
+        );
+    }
+
     return (
         <>
-            <div className="text-container">
+            <NavBar businessInfo={businessInfo} />
+            <div className="landing-container">
+                <div id="response_div"></div>
                 <div className="chat-container">
                     <header>
-                        <h2>Demo Text Message Contact Form</h2>
+                        <h2>Text Message Contact Form</h2>
 
                         <div className="input-wrapper">
                             <TextField
                                 className="input"
-                                label="Demo Customer Name"
+                                label="Your Name"
                                 type="text"
                                 name="customerName"
-                                placeholder="Enter Customer Name"
+                                placeholder="Enter your Name"
                                 value={message.message.customerName}
                                 onChange={handleChange}
                             />
@@ -119,24 +153,11 @@ function Text({ user }) {
                             <TextField
                                 className="input"
                                 type="tel"
-                                label="Demo Customer Number"
+                                label="Your Phone Number"
                                 name="customerCell"
                                 id="cellphone"
                                 placeholder="NO Spaces, Dashes, or Parantheses"
                                 value={message.message.customerCell}
-                                onChange={handleChange}
-                                inputProps={{ maxLength: 10 }}
-                            />
-                        </div>
-                        <div className="input-wrapper">
-                            <TextField
-                                className="input"
-                                type="tel"
-                                label="The Cell # To Receive Test"
-                                name="rooferCell"
-                                id="cellphone"
-                                placeholder="NO Spaces, Dashes, or Parantheses"
-                                value={message.message.rooferCell}
                                 onChange={handleChange}
                                 inputProps={{ maxLength: 10 }}
                             />
@@ -155,7 +176,6 @@ function Text({ user }) {
                                 multiline
                             />
                         </div>
-
                         <div
                             className="send-button"
                             id="twilio-contact-form-submit"
@@ -167,8 +187,8 @@ function Text({ user }) {
                     <div className="chat">
                         <div className="mine messages">
                             <div className="message">
-                                Welcome to Valley Roofing and Siding! Send us a
-                                text message below and Chris will get in touch
+                                Welcome to {businessInfo.businessName}! Send us
+                                a text message below and we will get in touch
                                 with you shortly.
                             </div>
                             <div className="message last">
@@ -176,8 +196,9 @@ function Text({ user }) {
                             </div>
                         </div>
                     </div>
+                    <div className="msg-input-container"></div>
 
-                    <div className="footer" ref={chatRef}>
+                    <div className="footer">
                         <p className="signature">
                             Powered by SmartSeed Technologies
                         </p>
@@ -189,4 +210,4 @@ function Text({ user }) {
     );
 }
 
-export default Text;
+export default LandingPage;

@@ -1,18 +1,18 @@
 import { lazy } from "react";
 
 // Admin
-const Demo = lazy(() => import("../components/Demo.js"));
+const DemoHome = lazy(() => import("../pages/DemoHome.js"));
 
 // Landing Page
-const LandingPage = lazy(() => import("../components/LandingPage"));
+const LandingPage = lazy(() => import("../pages/LandingPage"));
 
 // Login Page
-const Login = lazy(() => import("../components/Login"));
+const Login = lazy(() => import("../pages/Login"));
 
 // Add Business Page
-const AddBusiness = lazy(() => import("../components/AddBusiness"));
+const AddBusiness = lazy(() => import("../pages/AddBusiness"));
 
 // All Clients Page
-const ClientList = lazy(() => import("../components/ClientList"));
+const ClientList = lazy(() => import("../pages/ClientList"));
 
-export { Demo, LandingPage, Login, AddBusiness, ClientList };
+export { DemoHome, LandingPage, Login, AddBusiness, ClientList };

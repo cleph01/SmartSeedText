@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import "../lib/css/tool-tip.scss";
+import "../lib/css/components/tool-tip.scss";
 
 function ToolTip(props) {
     let timeOut;

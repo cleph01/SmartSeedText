@@ -1,17 +1,17 @@
 import { useState, useEffect, useContext } from "react";
 import { Route, Switch } from "react-router-dom";
 
-import DemoNavBar from "./DemoNavBar";
+import DemoNavBar from "../components/DemoNavBar";
 
-import AddBusiness from "./AddBusiness";
-import Text from "./Text";
-import ClientList from "./ClientList";
+import AddBusiness from "../pages/AddBusiness";
+import Text from "../pages/Text";
+import ClientList from "../pages/ClientList";
 
 import { UserContext } from "../contexts/UserContext";
 
 import { db } from "../services/firebase/firebase-config";
 
-import "../lib/css/demo.scss";
+import "../lib/css/pages/demo-home.scss";
 
 function Demo({ authUser }) {
     const { userState, userDispatch } = useContext(UserContext);
