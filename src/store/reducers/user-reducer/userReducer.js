@@ -12,6 +12,7 @@ const UserReducer = (state, action) => {
                 phoneNumber: action.payload.phoneNumber,
                 timestamp: action.payload.timestamp,
                 role: action.payload.role,
+                authorized: action.payload.authorized,
             };
 
         case "USER/SET_EXISTING_USER":
@@ -25,6 +26,7 @@ const UserReducer = (state, action) => {
                 role: action.payload.role,
                 email: action.payload.email,
                 timestamp: action.payload.timestamp,
+                authorized: action.payload.authorized,
             };
 
         case "AUTH/LOGOUT":

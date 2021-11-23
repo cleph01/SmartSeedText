@@ -12,6 +12,7 @@ import * as COMPONENTS from "./routing/routeComponents";
 import PrivateRoute from "./routing/PrivateRoute";
 import IsUserLoggedIn from "./routing/IsUserLoggedIn";
 
+
 import "./App.css";
 
 const initialState = {
@@ -77,6 +78,8 @@ function App() {
                             >
                                 <COMPONENTS.Login />
                             </IsUserLoggedIn>
+
+                    
 
                             <Route>
                                 <COMPONENTS.NotFound />

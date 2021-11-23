@@ -1,11 +1,12 @@
-import { useEffect, useContext } from "react";
-import { Route } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { Route, Redirect } from "react-router-dom";
 
 import DemoNavBar from "../components/DemoNavBar";
 
 import AddBusiness from "./AddBusiness";
 import Text from "./DemoText";
 import ClientList from "./ClientList";
+import UnauthorizedUser from "../components/UnauthorizedUser";
 
 import { UserContext } from "../contexts/UserContext";
 
@@ -15,6 +16,7 @@ import "../lib/css/pages/demo-home.scss";
 
 function Demo({ authUser }) {
     const { userState, userDispatch } = useContext(UserContext);
+    const [user, setuser] = useState(null);
 
     useEffect(() => {
         // Try and Refactor with Async/Await
@@ -36,8 +38,11 @@ function Demo({ authUser }) {
                                 userId: user.id,
                                 role: user.data().role,
                                 displayName: user.data().displayName,
+                                authorized: user.data().authorized,
                             },
                         });
+
+                        setuser(user);
                     } else {
                         // If doesn't Exist, Create New User and set State with Reducer
 
@@ -49,6 +54,7 @@ function Demo({ authUser }) {
                             phoneNumber: authUser.phoneNumber,
                             timestamp: Date.now(),
                             userId: authUser.uid,
+                            authorized: false,
                         };
 
                         db.collection("users")
@@ -64,6 +70,11 @@ function Demo({ authUser }) {
                                     "Created User with Id: ",
                                     authUser.uid
                                 );
+
+                                setuser({
+                                    salespersonId: authUser.uid,
+                                    authorized: false,
+                                });
                             })
                             .catch((error) => {
                                 console.log("Error Creating New User: ", error);
@@ -76,12 +87,14 @@ function Demo({ authUser }) {
         }
     }, []);
 
+    console.log("UserState at Demo: ", userState);
     return (
         <div
             className="landing-container"
             style={{ backgroundImage: 'url("/logo192.png")' }}
         >
-            <DemoNavBar user={userState} />
+            {userState.authorized && <DemoNavBar user={userState} />}
+            {!userState.authorized && <UnauthorizedUser />}
 
             <Route path="/demo/text">
                 <Text />
