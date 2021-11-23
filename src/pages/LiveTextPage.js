@@ -120,7 +120,6 @@ function LandingPage() {
         return () => setBusinessExists(false);
     }, []);
 
-    console.log("busienss exists: ", businessExists);
     if (!businessInfo) {
         return (
             <div

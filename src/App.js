@@ -68,6 +68,16 @@ function App() {
                                 path={ROUTES.MAIN}
                                 component={COMPONENTS.LiveTextPage}
                             />
+
+                            <IsUserLoggedIn
+                                exact
+                                authUser={authUser}
+                                path="/"
+                                loggedInPath={ROUTES.DEMO_HOME}
+                            >
+                                <COMPONENTS.Login />
+                            </IsUserLoggedIn>
+
                             <Route>
                                 <COMPONENTS.NotFound />
                             </Route>

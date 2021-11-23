@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import Divider from "@mui/material/Divider";
 
 import "../../lib/css/modals/edit-modal.scss";
 
