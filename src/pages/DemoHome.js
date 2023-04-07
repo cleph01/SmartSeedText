@@ -45,6 +45,7 @@ function Demo({ authUser }) {
                         setuser(user);
                     } else {
                         // If doesn't Exist, Create New User and set State with Reducer
+                        // set with authorized '0'
 
                         const newUserData = {
                             displayName: authUser.email,

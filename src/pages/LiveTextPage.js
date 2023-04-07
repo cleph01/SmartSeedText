@@ -43,6 +43,7 @@ function LandingPage() {
 
         const twilioPayload = {
             to: message.message.rooferCell,
+            from: businessInfo.twilioNumber,
             body: `New Message from Contact Form: Customer Name: ${message.message.customerName} - ${message.message.body} - Call them @ : ${message.message.customerCell}`,
             businessId: businessId,
             businessName: businessInfo.businessName,
@@ -64,7 +65,7 @@ function LandingPage() {
                 sendingEl.remove();
 
                 chat.innerHTML +=
-                    "<div class='mine messages'><div class='message last'>Your message has successfully been sent!! 🙌  Someone will be in touch with you shortly. 💯</div></div>";
+                    "<div class='mine messages'><div class='message last'>Your message has successfully been sent!! Someone will be in touch with you shortly. ✅ </div></div>";
 
                 // Reset Message Fields, Keeping Roofer # intact
                 setMessage((prevState) => ({
@@ -216,7 +217,7 @@ function LandingPage() {
                         <p className="signature">
                             Powered by SmartSeed Technologies
                         </p>
-                        <p>Copyright &copy; 2021</p>
+                        <p>Copyright &copy; 2023</p>
                     </div>
                 </div>
             </div>
